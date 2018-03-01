@@ -41,7 +41,13 @@ import org.json.JSONObject;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -288,7 +294,7 @@ public class MapsActivity extends Fragment implements
 
         @Override
         protected String doInBackground(String... params) {
-            JSONObject parentObject = new JSONObject();
+            JSONObject parentObject = GetJsonObject.getJsonObjectFromUrl(params[0]);
 
             JSONArray childObject = null;
             try {
@@ -304,7 +310,7 @@ public class MapsActivity extends Fragment implements
             jobs = gson.fromJson(res,collectionType);
 
 
-            Log.d("data",jobs.toString());
+            Log.d("Landing",jobs.toString());
             return null;
         }
         @Override
