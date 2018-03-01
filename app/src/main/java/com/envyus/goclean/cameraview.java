@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Camera;
+
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -27,6 +29,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,20 +56,45 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class cameraview extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    private android.hardware.Camera mCamera;
+    private CameraPreview mPreview;
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-            View view = inflater.inflate(R.layout.activity_cameraview, container, false);
+        View view = inflater.inflate(R.layout.activity_cameraview, container, false);
 
 
-            return view;
+
+
+        super.onCreate(savedInstanceState);
+
+
+        // Create an instance of Camera
+        mCamera = getCameraInstance();
+        mCamera.setDisplayOrientation(90);
+        // Create our Preview view and set it as the content of our activity.
+        mPreview = new CameraPreview(getContext(), mCamera);
+
+        FrameLayout preview = (FrameLayout) view.findViewById(R.id.camera_preview);
+        preview.addView(mPreview);
+
+        return view;
+    }
+
+
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    protected android.hardware.Camera getCameraInstance(){
+        android.hardware.Camera c = null;
+        try {
+            c = android.hardware.Camera.open();
+        } catch (Exception e){
         }
-
-
-
-        @Override
-        public void onViewCreated(View view, Bundle savedInstanceState) {
-
-            super.onViewCreated(view, savedInstanceState);
-        }
+        return c;
+    }
 }

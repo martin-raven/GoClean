@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GoClean.iml" filepath="$PROJECT_DIR$/GoClean.iml" />
-      <module fileurl="file://C:\Users\Rajat\Desktop\oneHack\GoClean\GoClean\GoClean.iml" filepath="C:\Users\Rajat\Desktop\oneHack\GoClean\GoClean\GoClean.iml" />
       <module fileurl="file://C:\Users\martin\StudioProjects\GoClean\GoClean.iml" filepath="C:\Users\martin\StudioProjects\GoClean\GoClean.iml" />
+      <module fileurl="file://C:\Users\Rajat\Desktop\oneHack\GoClean\GoClean\GoClean.iml" filepath="C:\Users\Rajat\Desktop\oneHack\GoClean\GoClean\GoClean.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\Rajat\Desktop\oneHack\GoClean\GoClean\app\app.iml" filepath="C:\Users\Rajat\Desktop\oneHack\GoClean\GoClean\app\app.iml" />
     </modules>

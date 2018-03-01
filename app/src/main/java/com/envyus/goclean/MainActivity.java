@@ -1,5 +1,7 @@
 package com.envyus.goclean;
 
+import android.*;
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private FirebaseAuth mAuth;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
+    public static final int requestCode = 1;
 //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +81,16 @@ public class MainActivity extends AppCompatActivity {
         manager3.beginTransaction().replace(R.id.container, new profileview()).commit();
     }
     private  boolean checkAndRequestPermissions() {
+
         int internet=ContextCompat.checkSelfPermission(this, android.Manifest.permission.INTERNET);
         int loc = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
         int loc2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
         List<String> listPermissionsNeeded = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA}, requestCode);
+
+        }
         if (internet != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
