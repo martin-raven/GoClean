@@ -23,8 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#cc3b60a7"
+            android:orientation="horizontal"
             android:paddingBottom="45dp"
-            android:orientation="horizontal">
+            android:visibility="invisible">
 
             <ImageButton
                 android:id="@+id/buttonCurrent"
