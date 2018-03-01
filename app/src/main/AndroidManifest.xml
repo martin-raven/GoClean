@@ -41,7 +41,10 @@
 
         <activity
             android:name=".LoginActivity"
-            android:label="Login"></activity>
+            android:label="Login" />
+        <activity
+            android:name=".MapsActivity2"
+            android:label="@string/title_activity_maps2"></activity>
     </application>
 
 </manifest>
