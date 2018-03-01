@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.container, new cameraview()).commit();
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         while(!checkAndRequestPermissions()){}
@@ -41,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
             Intent GotoLogin=new Intent(this,LoginActivity.class);
             startActivity(GotoLogin);
         }
+        if (ContextCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA}, requestCode);
+
+        }
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.container, new cameraview()).commit();
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         if (bottomNavigationView != null) {
             // Set action to perform when any menu-item is selected.
@@ -86,11 +92,7 @@ public class MainActivity extends AppCompatActivity {
         int loc = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
         int loc2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
         List<String> listPermissionsNeeded = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA}, requestCode);
 
-        }
         if (internet != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
