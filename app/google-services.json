@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "302284407123",
+    "firebase_url": "https://goclean-bbc03.firebaseio.com",
+    "project_id": "goclean-bbc03",
+    "storage_bucket": "goclean-bbc03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302284407123:android:9b0eed0763893f4c",
+        "android_client_info": {
+          "package_name": "com.envyus.goclean"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302284407123-qc3j0qt4rh0dua886o4h61280rhc9q4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.envyus.goclean",
+            "certificate_hash": "86d9831a36660dbffe527adab32f09a8bacbf5f1"
+          }
+        },
+        {
+          "client_id": "302284407123-ogglq1i45psi66epjh4tpl8r0pb0c3ar.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.envyus.goclean",
+            "certificate_hash": "8229d65d8a4b44d0296b03ea75d323c6e836a0a0"
+          }
+        },
+        {
+          "client_id": "302284407123-gvkpsppeqc1g95gt6as4uoae4ka7am6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc33Zt6F5Ll-s8B8Xme0l57Cz4bIaGJ-E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302284407123-gvkpsppeqc1g95gt6as4uoae4ka7am6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

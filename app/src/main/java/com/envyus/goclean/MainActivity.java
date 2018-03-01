@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void switchToFragment2() {
         FragmentManager manager2 = getSupportFragmentManager();
-        manager2.beginTransaction().replace(R.id.container, new mapview()).commit();
+        manager2.beginTransaction().replace(R.id.container, new MapsActivity()).commit();
     }
     public void switchToFragment3() {
         FragmentManager manager3 = getSupportFragmentManager();
