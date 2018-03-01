@@ -213,22 +213,19 @@ public class MapsActivity extends Fragment implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        ArrayList<markermodel> jobsAvailable = (ArrayList<markermodel>) jobs;
+        ArrayList<markermodel> jobsAvailable = jobs;
         double lat,lang;
-        int j=0;
         try {
             for (int i = 0; i < jobs.size(); i++) {
                 lat = Double.valueOf(jobsAvailable.get(i).getLatt());
                 lang = Double.valueOf(jobsAvailable.get(i).getLong());
-
-
                     mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lang))
                             .title(jobsAvailable.get(i).getDumbID()));
 
                 }
 
 
-        }catch (Exception e){}
+        }catch (Exception e){e.printStackTrace();}
         LatLng latLng = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(latLng).draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));

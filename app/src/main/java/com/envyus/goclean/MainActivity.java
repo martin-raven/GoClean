@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private  boolean checkAndRequestPermissions() {
 
         int internet=ContextCompat.checkSelfPermission(this, android.Manifest.permission.INTERNET);
+        int camera=ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         int loc = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
         int loc2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
         List<String> listPermissionsNeeded = new ArrayList<>();
