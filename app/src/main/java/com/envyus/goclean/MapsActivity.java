@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +28,22 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class MapsActivity extends Fragment implements
         OnMapReadyCallback,
@@ -45,7 +59,7 @@ public class MapsActivity extends Fragment implements
     //To store longitude and latitude from map
     private double longitude;
     private double latitude;
-
+    ArrayList<markermodel> jobs;
     //Buttons
     private ImageButton buttonSave;
     private ImageButton buttonCurrent;
@@ -67,7 +81,7 @@ public class MapsActivity extends Fragment implements
         mMapView = (MapView) rootView.findViewById(R.id.map);
 
         mMapView.onCreate(savedInstanceState);
-
+        jobs=new ArrayList<markermodel>();
         mMapView.onResume(); // needed to get the map to display immediately
 
         try {
@@ -120,8 +134,12 @@ public class MapsActivity extends Fragment implements
 //        fragment = new SupportMapFragment();
 //        transaction.replace(R.id.map, fragment, "added from seeker");
 //        transaction.commit();
-
+        httpcall();
         return rootView;
+    }
+
+    private void httpcall() {
+        new JsonTask().execute("https://fxurj2bm0m.execute-api.ap-south-1.amazonaws.com/DEV/getdumppoints");
     }
 
     @Override
@@ -189,11 +207,28 @@ public class MapsActivity extends Fragment implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        ArrayList<markermodel> jobsAvailable = (ArrayList<markermodel>) jobs;
+        double lat,lang;
+        int j=0;
+        try {
+            for (int i = 0; i < jobs.size(); i++) {
+                lat = Double.valueOf(jobsAvailable.get(i).getLatt());
+                lang = Double.valueOf(jobsAvailable.get(i).getLong());
+
+
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lang))
+                            .title(jobsAvailable.get(i).getDumbID()));
+
+                }
+
+
+        }catch (Exception e){}
         LatLng latLng = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(latLng).draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.setOnMarkerDragListener(this);
         mMap.setOnMapLongClickListener(this);
+
     }
 
     @Override
@@ -247,6 +282,35 @@ public class MapsActivity extends Fragment implements
         if(v == buttonCurrent){
             getCurrentLocation();
             moveMap();
+        }
+    }
+    public class JsonTask extends AsyncTask<String,String,String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            JSONObject parentObject = new JSONObject();
+
+            JSONArray childObject = null;
+            try {
+                childObject = parentObject.getJSONArray("Items");
+            } catch (JSONException e) {
+                Log.e("Exception ",String.valueOf(e));
+            }
+            String res = childObject.toString();
+            com.google.gson.Gson gson = new com.google.gson.Gson();
+
+            Type collectionType = new TypeToken<Collection<markermodel>>() {}.getType();
+
+            jobs = gson.fromJson(res,collectionType);
+
+
+            Log.d("data",jobs.toString());
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
         }
     }
 }
