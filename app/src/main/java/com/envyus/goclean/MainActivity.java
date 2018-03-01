@@ -1,6 +1,7 @@
 package com.envyus.goclean;
 //raven in
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,9 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 //suhail
     private TextView mTextMessage;
+    private FirebaseAuth mAuth;
 
 
 
@@ -23,8 +28,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.container, new cameraview()).commit();
-
-
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser==null)
+        {
+            Intent GotoLogin=new Intent(this,LoginActivity.class);
+            startActivity(GotoLogin);
+        }
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         if (bottomNavigationView != null) {
             // Set action to perform when any menu-item is selected.
