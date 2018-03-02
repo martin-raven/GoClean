@@ -53,6 +53,8 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class profileview extends Fragment {
+    ImageButton im;
+    int clickcount=0;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -68,5 +70,18 @@ public class profileview extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+        im=view.findViewById(R.id.tick);
+        im.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View view) {
+                clickcount++;
+                if(clickcount%2==0)
+                    im.setImageResource(R.mipmap.nontick);
+                else
+                    im.setImageResource(R.mipmap.tick);
+
+            }
+        });
     }
 }

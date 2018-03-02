@@ -21,23 +21,26 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="50dp">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <Button
+                <ImageButton
                     android:id="@+id/upload"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@mipmap/send"
+                    android:scaleType="fitCenter"
+                    android:background="@android:color/transparent"
 
 
                     android:layout_marginLeft="40dp"
 
-                    android:text="send" />
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -45,14 +48,19 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <Button
+
+                <ImageButton
                     android:id="@+id/retake"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@mipmap/retake"
+                    android:scaleType="fitCenter"
+                    android:background="@android:color/transparent"
+
+
                     android:layout_marginLeft="40dp"
 
-
-                    android:text="retake" />
+                    />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

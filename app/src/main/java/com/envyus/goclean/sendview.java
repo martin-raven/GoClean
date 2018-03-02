@@ -76,7 +76,7 @@ public class sendview extends Fragment{
     ImageView imageView;
     private GoogleApiClient googleApiClient;
     Double latitude=null,longitude=null;
-    Button bt,bt2;
+    ImageButton bt,bt2;
     private static String jsonInString;
     public ProgressDialog mProgressDialog;
     @Override
