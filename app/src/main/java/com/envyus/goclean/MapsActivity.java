@@ -183,6 +183,8 @@ public class MapsActivity extends Fragment implements
 
             //moving the map to location
             moveMap();
+            Addmarkers();
+
         }
     }
 
@@ -213,27 +215,31 @@ public class MapsActivity extends Fragment implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        ArrayList<markermodel> jobsAvailable = jobs;
-        double lat,lang;
-        try {
-            for (int i = 0; i < jobs.size(); i++) {
-                lat = Double.valueOf(jobsAvailable.get(i).getLatt());
-                lang = Double.valueOf(jobsAvailable.get(i).getLong());
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lang))
-                            .title(jobsAvailable.get(i).getDumbID()));
-
-                }
-
-
-        }catch (Exception e){e.printStackTrace();}
         LatLng latLng = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(latLng).draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.setOnMarkerDragListener(this);
         mMap.setOnMapLongClickListener(this);
+        Addmarkers();
 
     }
+    public void Addmarkers()
+    {
+        ArrayList<markermodel> jobsAvailable = jobs;
+        double lat,lang;
+        try {
+            for (int i = 0; i < jobs.size(); i++) {
+                Log.d("Marker in  ",jobsAvailable.get(i).getLatt()+"  "+jobsAvailable.get(i).getLong());
+                lat = Double.valueOf(jobsAvailable.get(i).getLatt());
+                lang = Double.valueOf(jobsAvailable.get(i).getLong());
+                mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lang))
+                        .title(jobsAvailable.get(i).getDumbID()));
 
+            }
+
+
+        }catch (Exception e){e.printStackTrace();}
+    }
     @Override
     public void onConnected(Bundle bundle) {
         getCurrentLocation();
@@ -253,7 +259,7 @@ public class MapsActivity extends Fragment implements
     public void onMapLongClick(LatLng latLng) {
         //Clearing all the markers
         mMap.clear();
-
+        Addmarkers();
         //Adding a new marker to the current pressed position
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
