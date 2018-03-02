@@ -99,6 +99,7 @@ public class MapsActivity extends Fragment implements
         }
 
         mMapView.getMapAsync(this);
+//        });
         //Initializing googleapi client
         googleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
@@ -163,8 +164,6 @@ public class MapsActivity extends Fragment implements
 
             //moving the map to location
             moveMap();
-            Addmarkers();
-
         }
     }
 
@@ -186,7 +185,7 @@ public class MapsActivity extends Fragment implements
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         //Animating the camera
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
         //Displaying current coordinates in toast
         Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
@@ -195,26 +194,27 @@ public class MapsActivity extends Fragment implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        Addmarkers();
-
-    }
-    public void Addmarkers()
-    {
         ArrayList<markermodel> jobsAvailable = jobs;
         double lat,lang;
         try {
             for (int i = 0; i < jobs.size(); i++) {
-                Log.d("Marker in  ",jobsAvailable.get(i).getLatt()+"  "+jobsAvailable.get(i).getLong());
                 lat = Double.valueOf(jobsAvailable.get(i).getLatt());
                 lang = Double.valueOf(jobsAvailable.get(i).getLong());
-                mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lang))
-                        .title(jobsAvailable.get(i).getDumbID()));
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lang))
+                            .title(jobsAvailable.get(i).getDumbID()));
 
-            }
+                }
 
 
         }catch (Exception e){e.printStackTrace();}
+        LatLng latLng = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(latLng).draggable(true));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.setOnMarkerDragListener(this);
+        mMap.setOnMapLongClickListener(this);
+
     }
+
     @Override
     public void onConnected(Bundle bundle) {
         getCurrentLocation();
@@ -233,7 +233,8 @@ public class MapsActivity extends Fragment implements
     @Override
     public void onMapLongClick(LatLng latLng) {
         //Clearing all the markers
-        Addmarkers();
+        mMap.clear();
+
         //Adding a new marker to the current pressed position
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
@@ -293,7 +294,6 @@ public class MapsActivity extends Fragment implements
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Addmarkers();
 
         }
     }
