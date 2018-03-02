@@ -107,12 +107,6 @@ public class MapsActivity extends Fragment implements
                 .build();
 
         //Initializing views and adding onclick listeners
-        buttonSave = (ImageButton) rootView.findViewById(R.id.buttonSave);
-        buttonCurrent = (ImageButton) rootView.findViewById(R.id.buttonCurrent);
-        buttonView = (ImageButton) rootView.findViewById(R.id.buttonView);
-        buttonSave.setOnClickListener(this);
-        buttonCurrent.setOnClickListener(this);
-        buttonView.setOnClickListener(this);
 
 //        FragmentManager manager = getFragmentManager();
 //        fragment = (SupportMapFragment) manager.findFragmentById(R.id.map);
