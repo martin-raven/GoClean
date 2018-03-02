@@ -61,8 +61,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -103,14 +105,14 @@ public class sendview extends Fragment{
                 ContentResolver cR = getContext().getContentResolver();
                 MimeTypeMap mime = MimeTypeMap.getSingleton();
                 String type = "jpg";
-                String filename = "seby" + type;
+                String filename = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 getCurrentLocation();
                 profilepic pc=new profilepic();
                 try {
                     pc.setUsername("seby");
                     pc.setExtension(type);
                     pc.setImageData(imageUtil.convert(bitmap));
-                    pc.setDumbID("1231223");
+                    pc.setDumbID(filename);
                     pc.setLatt(latitude);
                     pc.setLong(longitude);
                     com.google.gson.Gson gson = new GsonBuilder().create();
