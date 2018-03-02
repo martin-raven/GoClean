@@ -127,19 +127,21 @@ public class MapsActivity extends Fragment implements
     @Override
     public void onStart() {
         googleApiClient.connect();
+        Log.d("GoogleAPI","Connected");
         super.onStart();
     }
 
     @Override
     public void onStop() {
+        Log.e("GoogleAPI","Disconnected");
         googleApiClient.disconnect();
         super.onStop();
     }
 
     //Getting current location
     private void getCurrentLocation() {
-        if(mMap!=null)
-            mMap.clear();
+//        if(mMap!=null)
+//            mMap.clear();
         //Creating a location object
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -185,7 +187,7 @@ public class MapsActivity extends Fragment implements
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         //Animating the camera
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
         //Displaying current coordinates in toast
         Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
@@ -194,25 +196,6 @@ public class MapsActivity extends Fragment implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        ArrayList<markermodel> jobsAvailable = jobs;
-        double lat,lang;
-        try {
-            for (int i = 0; i < jobs.size(); i++) {
-                lat = Double.valueOf(jobsAvailable.get(i).getLatt());
-                lang = Double.valueOf(jobsAvailable.get(i).getLong());
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lang))
-                            .title(jobsAvailable.get(i).getDumbID()));
-
-                }
-
-
-        }catch (Exception e){e.printStackTrace();}
-        LatLng latLng = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(latLng).draggable(true));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.setOnMarkerDragListener(this);
-        mMap.setOnMapLongClickListener(this);
-
     }
 
     @Override
@@ -232,8 +215,6 @@ public class MapsActivity extends Fragment implements
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        //Clearing all the markers
-        mMap.clear();
 
         //Adding a new marker to the current pressed position
         mMap.addMarker(new MarkerOptions()
@@ -260,7 +241,22 @@ public class MapsActivity extends Fragment implements
         //Moving the map
         moveMap();
     }
+    public void addmarker()
+    {
+        ArrayList<markermodel> jobsAvailable = jobs;
+        double lat,lang;
+        try {
+            for (int i = 0; i < jobs.size(); i++) {
+                lat = Double.valueOf(jobsAvailable.get(i).getLatt());
+                lang = Double.valueOf(jobsAvailable.get(i).getLong());
+                mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lang))
+                        .title(jobsAvailable.get(i).getDumbID()));
 
+            }
+
+
+        }catch (Exception e){e.printStackTrace();}
+    }
     @Override
     public void onClick(View v) {
         if(v == buttonCurrent){
@@ -293,6 +289,7 @@ public class MapsActivity extends Fragment implements
         }
         @Override
         protected void onPostExecute(String s) {
+            addmarker();
             super.onPostExecute(s);
 
         }
