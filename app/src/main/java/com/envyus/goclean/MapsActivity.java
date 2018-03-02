@@ -97,27 +97,6 @@ public class MapsActivity extends Fragment implements
         }
 
         mMapView.getMapAsync(this);
-//        {
-//            @SuppressLint("MissingPermission")
-//            @Override
-//            public void onMapReady(GoogleMap mMap) {
-//
-//
-//                // For showing a move to my location button
-//                try {
-//                    mMap.setMyLocationEnabled(true);
-//                }catch (Exception e){}
-//
-//
-//                // For dropping a marker at a point on the Map
-//                LatLng sydney = new LatLng(-34, 151);
-//                mMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-//
-//                // For zooming automatically to the location of the marker
-//                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-//                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//            }
-//        });
         //Initializing googleapi client
         googleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
@@ -206,7 +185,7 @@ public class MapsActivity extends Fragment implements
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         //Animating the camera
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
         //Displaying current coordinates in toast
         Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
@@ -215,11 +194,6 @@ public class MapsActivity extends Fragment implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng latLng = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(latLng).draggable(true));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.setOnMarkerDragListener(this);
-        mMap.setOnMapLongClickListener(this);
         Addmarkers();
 
     }
@@ -258,7 +232,6 @@ public class MapsActivity extends Fragment implements
     @Override
     public void onMapLongClick(LatLng latLng) {
         //Clearing all the markers
-        mMap.clear();
         Addmarkers();
         //Adding a new marker to the current pressed position
         mMap.addMarker(new MarkerOptions()
@@ -319,6 +292,7 @@ public class MapsActivity extends Fragment implements
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Addmarkers();
 
         }
     }
