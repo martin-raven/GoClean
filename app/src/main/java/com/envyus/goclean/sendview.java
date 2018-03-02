@@ -1,7 +1,11 @@
 package com.envyus.goclean;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 /**
@@ -47,6 +51,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
@@ -63,8 +70,10 @@ import static android.app.Activity.RESULT_OK;
  * Created by seby on 3/1/2018.
  */
 
-public class sendview extends Fragment {
+public class sendview extends Fragment{
     ImageView imageView;
+    private GoogleApiClient googleApiClient;
+    Double latitude=null,longitude=null;
     Button bt,bt2;
     private static String jsonInString;
     public ProgressDialog mProgressDialog;
@@ -94,16 +103,21 @@ public class sendview extends Fragment {
                 ContentResolver cR = getContext().getContentResolver();
                 MimeTypeMap mime = MimeTypeMap.getSingleton();
                 String type = "jpg";
-
                 String filename = "seby" + type;
+                getCurrentLocation();
                 profilepic pc=new profilepic();
-                pc.setUsername("seby");
-                pc.setExtension(type);
-                pc.setImageData(imageUtil.convert(bitmap));
-                pc.setDumbID("1231223");
-                com.google.gson.Gson gson = new GsonBuilder().create();
-                jsonInString = gson.toJson(pc);
-                 new Uploadpicture().execute("https://ixhc3f1kxk.execute-api.us-east-1.amazonaws.com/dev/profilepicture/uploadprofilepicture");
+                try {
+                    pc.setUsername("seby");
+                    pc.setExtension(type);
+                    pc.setImageData(imageUtil.convert(bitmap));
+                    pc.setDumbID("1231223");
+                    pc.setLatt(latitude);
+                    pc.setLong(longitude);
+                    com.google.gson.Gson gson = new GsonBuilder().create();
+                    jsonInString = gson.toJson(pc);
+                    Log.d("Json in string", jsonInString);
+                    new Uploadpicture().execute("https://3oafpgzf9k.execute-api.ap-south-1.amazonaws.com/DEV/upload");
+                }catch (Exception e){Log.d("Exception in send",String.valueOf(e));}
             }
         });
         bt2=view.findViewById(R.id.retake);
@@ -123,10 +137,22 @@ public class sendview extends Fragment {
 
 
     }
+    private void getCurrentLocation() {
+        //Creating a location object
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        longitude = (double)sharedPreferences.getFloat("LONG", 0);
+        latitude = (double)sharedPreferences.getFloat("LAT", 0);
+    }
     public class profilepic
     {
         String Username;
-
+        Double Latt,Long;
+        public void setLatt(double latt) {
+            Latt = latt;
+        }
+        public void setLong(double log) {
+            Long = log;
+        }
         public String getUsername() {
             return Username;
         }

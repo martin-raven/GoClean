@@ -82,10 +82,6 @@ public class cameraview extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.activity_cameraview, container, false);
-
-
-
-
         super.onCreate(savedInstanceState);
 
         img=view.findViewById(R.id.preview);
@@ -94,7 +90,10 @@ public class cameraview extends Fragment {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCamera.takePicture(null, null, mPicture);
+                try {
+                    mCamera.takePicture(null, null, mPicture);
+                }catch (Exception e){}
+
             }
         });
         mCamera = getCameraInstance();
