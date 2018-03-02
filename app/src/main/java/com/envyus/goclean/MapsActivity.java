@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -181,7 +182,8 @@ public class MapsActivity extends Fragment implements
         mMap.addMarker(new MarkerOptions()
                 .position(latLng) //setting position
                 .draggable(true) //Making the marker draggable
-                .title("Current Location")); //Adding a title
+                .title("Current Location"))//Adding a title
+                .setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
 
         //Moving the camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -190,7 +192,6 @@ public class MapsActivity extends Fragment implements
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
         //Displaying current coordinates in toast
-        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -243,6 +244,7 @@ public class MapsActivity extends Fragment implements
     }
     public void addmarker()
     {
+        if(jobs!=null){
         ArrayList<markermodel> jobsAvailable = jobs;
         double lat,lang;
         try {
@@ -250,12 +252,14 @@ public class MapsActivity extends Fragment implements
                 lat = Double.valueOf(jobsAvailable.get(i).getLatt());
                 lang = Double.valueOf(jobsAvailable.get(i).getLong());
                 mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lang))
-                        .title(jobsAvailable.get(i).getDumbID()));
+                        .title(jobsAvailable.get(i).getDumbID()))
+                        .setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_waste));
 
             }
 
 
         }catch (Exception e){e.printStackTrace();}
+        }
     }
     @Override
     public void onClick(View v) {
@@ -273,17 +277,15 @@ public class MapsActivity extends Fragment implements
             JSONArray childObject = null;
             try {
                 childObject = parentObject.getJSONArray("Items");
-            } catch (JSONException e) {
+                String res = childObject.toString();
+                com.google.gson.Gson gson = new com.google.gson.Gson();
+
+                Type collectionType = new TypeToken<Collection<markermodel>>() {}.getType();
+
+                jobs = gson.fromJson(res,collectionType);
+            } catch (Exception e) {
                 Log.e("Exception ",String.valueOf(e));
             }
-            String res = childObject.toString();
-            com.google.gson.Gson gson = new com.google.gson.Gson();
-
-            Type collectionType = new TypeToken<Collection<markermodel>>() {}.getType();
-
-            jobs = gson.fromJson(res,collectionType);
-
-
             Log.d("Landing",jobs.toString());
             return null;
         }
