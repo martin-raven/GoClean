@@ -141,8 +141,8 @@ public class MapsActivity extends Fragment implements
 
     //Getting current location
     private void getCurrentLocation() {
-//        if(mMap!=null)
-//            mMap.clear();
+        if(mMap!=null)
+            mMap.clear();
         //Creating a location object
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
